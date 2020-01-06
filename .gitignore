@@ -89,8 +89,8 @@ env.bak/
 venv.bak/
 
 # Project specific files
-config/
 data/
 backup/
 log/
+config.json
 start.bat
