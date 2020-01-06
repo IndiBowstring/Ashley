@@ -1,4 +1,10 @@
-from config.config import __token__, __prefix__, __botName__, __botStatus__
-from config.config import __defaultChannel__, __defaultRole__, __adminRole__
+import json
 
-from config.cogs import __cogs__
+settings = json.load(open("config.json", "r"))
+
+cogs = [
+    'cogs.dice',
+    'cogs.admin',
+    'cogs.downtime',
+    'cogs.user'
+]
