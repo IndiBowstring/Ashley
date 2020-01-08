@@ -17,8 +17,8 @@ print('Preparing session . . .')
 
 @bot.event
 async def on_ready():
-    await bot.edit_profile(username=settings['botName'])
-    await bot.change_presence(game=discord.Game(name=settings['botStatus']))
+    # await bot.edit_profile(username=settings['botName'])
+    # await bot.change_presence(game=discord.Game(name=settings['botStatus']))
 
     # Load Cogs
     for cog in cogs:
