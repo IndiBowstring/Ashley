@@ -6,19 +6,14 @@ from discord.ext import commands
 
 from loadconfig import *
 import loaduserdata
-from cogs.downtime import DT
 
-description = 'Manage party equipment, session rsvp, and optimal killing strats'
-
-bot = commands.Bot(command_prefix=settings['prefix'], description=description)
+bot = commands.Bot(command_prefix=settings['prefix'])
 bot.remove_command("help")
 print('Preparing session . . .')
 
 
 @bot.event
 async def on_ready():
-    # await bot.edit_profile(username=settings['botName'])
-    # await bot.change_presence(game=discord.Game(name=settings['botStatus']))
 
     # Load Cogs
     for cog in cogs:
@@ -40,15 +35,6 @@ async def on_ready():
 @bot.event
 async def on_member_join(member):
     await bot.send_message(bot.get_channel(settings['defaultChannel']), "Welcome " + member.mention)
-    embed = discord.Embed(color=0x008000)
-    embed.add_field(name="!", value="“Here at the Psi’ Tshiks Adventuring Guild we accept adventurers"
-                                    " from all across the globe in order to complete tasks ranging from the mundane"
-                                    " to the deadly! As a member you will be expected to work well with others and be"
-                                    " capable of moving and fighting as a team! Here as a Psi’ Tshik it would be your"
-                                    " duty and responsibility to help and serve your community! Please make sure to visit"
-                                    " the pinned messages for your introductory brochure!  One of our recruiters will be"
-                                    " with you shortly for an interview!")
-    await bot.send_message(bot.get_channel(settings['defaultChannel']), embed=embed)
 
     try:
         loaduserdata.loaddata(bot)
@@ -56,19 +42,10 @@ async def on_member_join(member):
         print(f'User data not found.')
         print(f'{repr(err)}')
 
-    member.add_roles(settings['defaultRole'])
-
-    await bot.send_message(member, "Welcome once again!  We at Psi\' Tshiks use a special magic network"
-                                   "to keep track of everyone, you can learn more about what it and I can help"
-                                   "you with by typing /help either here, or in any discord channel.  Make sure"
-                                   "to register your character name using the /newCharacter command so I can start"
-                                   "keeping track of your downtime hours!")
-
 
 @bot.event
 async def on_member_remove(member):
-    await bot.send_message(bot.get_channel(settings['defaultChannel']),
-                           "Goodbye " + member.display_name + ", we hope to see you again at the Psi' Tshiks Adventuring Guild!")
+    pass
 
 
 # Lists help commands
@@ -114,5 +91,6 @@ async def help(ctx, menu=None):
                         value="Shows admin commands (Only admins have access)", inline=False)
 
     await bot.send_message(ctx.message.channel, embed=embed)
+
 
 bot.run(settings['token'])
